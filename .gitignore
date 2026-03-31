@@ -1,0 +1,33 @@
+# See https://help.github.com/ignore-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+.yalc
+yalc.lock
+
+# testing
+/coverage
+
+# production
+/build
+locale/_build/
+locale/*/*.js
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+test.html
+*debug.log*
+
+# shh
+*.ignore.*
+
+\.vs/
+*.swp
+.vscode/taskmarks.json
+.idea/

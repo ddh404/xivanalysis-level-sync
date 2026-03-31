@@ -1,0 +1,11 @@
+# Just use what's in the repo.
+* -text
+
+# Maybe this'll help with those horrid diffs on GH
+*.js linguist-language=JSX
+
+# Generated files
+locale/**/messages.json linguist-generated=true
+locale/en/messages.json linguist-generated=false
+**/*.module.css.d.ts linguist-generated=true
+src/generated/**/* linguist-generated=true

@@ -1,0 +1,23 @@
+root = true
+
+[*]
+indent_style = tab
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.yml]
+indent_style = space
+indent_size = 2
+
+# Blame yarn
+[package.json]
+indent_style = space
+indent_size = 2
+
+# Locale files are generated without a final newline, and will fail lint if there's a diff.
+[locale/**.json]
+insert_final_newline = false
+
+[CNAME]
+insert_final_newline = false
