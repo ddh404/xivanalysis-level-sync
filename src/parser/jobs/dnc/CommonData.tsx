@@ -1,0 +1,39 @@
+import {ActionKey} from 'data/ACTIONS'
+import {SEVERITY} from 'parser/core/modules/Suggestions'
+
+export const STANDARD_FINISHES: ActionKey[] = [
+	'STANDARD_FINISH',
+	'SINGLE_STANDARD_FINISH',
+	'DOUBLE_STANDARD_FINISH',
+]
+
+export const TECHNICAL_FINISHES: ActionKey[] = [
+	'TECHNICAL_FINISH',
+	'SINGLE_TECHNICAL_FINISH',
+	'DOUBLE_TECHNICAL_FINISH',
+	'TRIPLE_TECHNICAL_FINISH',
+	'QUADRUPLE_TECHNICAL_FINISH',
+]
+
+export const FINISHES: ActionKey[] = [
+	...STANDARD_FINISHES,
+	...TECHNICAL_FINISHES,
+]
+
+export const DEFAULT_SEVERITY_TIERS  = {
+	1: SEVERITY.MINOR,
+	3: SEVERITY.MEDIUM,
+	5: SEVERITY.MAJOR,
+}
+
+export const STEPS: ActionKey[] = [
+	'STANDARD_STEP',
+	'TECHNICAL_STEP',
+]
+
+export const DANCE_MOVES: ActionKey[] = [
+	'ENTRECHAT',
+	'EMBOITE',
+	'JETE',
+	'PIROUETTE',
+]

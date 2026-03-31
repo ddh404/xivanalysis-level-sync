@@ -1,0 +1,156 @@
+import {iconUrl} from 'data/icon'
+import {ensureStatuses} from '../type'
+
+export const PLD = ensureStatuses({
+	CIRCLE_OF_SCORN: {
+		id: 248,
+		name: 'Circle Of Scorn',
+		icon: iconUrl(210158),
+		duration: 15000,
+	},
+	REQUIESCAT: {
+		id: 1368,
+		name: 'Requiescat',
+		icon: iconUrl(212514),
+		duration: 30000,
+		stacksApplied: 4,
+	},
+	FIGHT_OR_FLIGHT: {
+		id: 76,
+		name: 'Fight Or Flight',
+		icon: iconUrl(210155),
+		duration: 20000,
+	},
+	IRON_WILL: {
+		id: 79,
+		name: 'Iron Will',
+		icon: iconUrl(212506),
+	},
+	SENTINEL: {
+		id: 74,
+		name: 'Sentinel',
+		icon: iconUrl(210151),
+		duration: 15000,
+	},
+	DIVINE_MIGHT: {
+		id: 2673,
+		name: 'Divine Might',
+		icon: 'https://xivapi.com/i/012000/012521.png',
+		duration: 30000,
+		stacksApplied: 1,
+	},
+	SHELTRON: {
+		id: 1856,
+		name: 'Sheltron',
+		icon: iconUrl(212510),
+		duration: 6000,
+	},
+	INTERVENTION: {
+		id: 1174,
+		name: 'Intervention',
+		icon: iconUrl(212511),
+		duration: 6000,
+	},
+	PASSAGE_OF_ARMS: {
+		id: 1175,
+		name: 'Passage Of Arms',
+		icon: iconUrl(212512),
+		duration: 18000,
+	},
+	DIVINE_VEIL: {
+		id: 727,
+		name: 'Divine Veil',
+		icon: iconUrl(212509),
+		duration: 30000,
+	},
+	COVER: {
+		id: 80,
+		name: 'Cover',
+		icon: iconUrl(212501),
+		duration: 12000,
+	},
+	COVERED: {
+		id: 81,
+		name: 'Covered',
+		icon: iconUrl(212502),
+		duration: 12000,
+	},
+	HALLOWED_GROUND: {
+		id: 82,
+		name: 'Hallowed Ground',
+		icon: iconUrl(212504),
+		duration: 10000,
+	},
+	BULWARK: {
+		id: 77,
+		name: 'Bulwark',
+		icon: 'https://xivapi.com/i/010000/010156.png',
+		duration: 10000,
+	},
+	HOLY_SHELTRON: {
+		id: 2674,
+		name: 'Holy Sheltron',
+		icon: iconUrl(212515),
+		duration: 8000,
+	},
+	KNIGHTS_RESOLVE: {
+		id: 2675,
+		name: 'Knight\'s Resolve',
+		icon: iconUrl(212516),
+		duration: 4000,
+	},
+	KNIGHTS_BENEDICTION: {
+		id: 2676,
+		name: 'Knight\'s Benediction',
+		icon: iconUrl(212517),
+		duration: 12000,
+	},
+	CONFITEOR_READY: {
+		id: 3019,
+		name: 'Confiteor Ready',
+		icon: iconUrl(212520),
+		duration: 30000,
+	},
+	ATONEMENT_READY: {
+		id: 1902,
+		name: 'Atonement Ready',
+		icon: iconUrl(210207),
+		duration: 30000,
+	},
+	SUPPLICATION_READY: {
+		id: 3827,
+		name: 'Supplication Ready',
+		icon: iconUrl(212523),
+		duration: 30000,
+	},
+	SEPULCHRE_READY: {
+		id: 3828,
+		name: 'Sepulchre Ready',
+		icon: iconUrl(212524),
+		duration: 30000,
+	},
+	BLADE_OF_HONOR_READY: {
+		id: 3831,
+		name: 'Blade of Honor Ready',
+		icon: iconUrl(213052),
+		duration: 30000,
+	},
+	GORING_BLADE_READY: {
+		id: 3847,
+		name: 'Goring Blade Ready',
+		icon: iconUrl(213053),
+		duration: 30000,
+	},
+	GUARDIAN: {
+		id: 3829,
+		name: 'Guardian',
+		icon: iconUrl(213050),
+		duration: 15000,
+	},
+	GUARDIANS_WILL: {
+		id: 3830,
+		name: 'Guardian\'s Will',
+		icon: iconUrl(213051),
+		duration: 15000,
+	},
+})

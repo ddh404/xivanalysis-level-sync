@@ -1,0 +1,1 @@
+robocopy "." "..\\xivanalysis-level-sync" //E //XD .git docs //XF CLAUDE.md .env .env.github-pages

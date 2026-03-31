@@ -1,0 +1,21 @@
+@value defaultRowHeight from '../components/Timeline.module.css';
+
+/* Colours picked to mimic vis for now */
+@value backgroundColour: rgba(213, 221, 246, .4);
+
+.abilityItem {
+	width: 100%;
+	height: 100%;
+	background: backgroundColour;
+	overflow: hidden;
+}
+
+.abilityItem > img {
+	max-height: 100%;
+	/* HACK: Firefox@127 does not seem to infer the box model width of images correctly if the height is as we have configured it. Setting an explicit height resolves the issue. */
+	height: defaultRowHeight;
+}
+
+.zeroWidthAbility {
+	overflow: visible;
+}

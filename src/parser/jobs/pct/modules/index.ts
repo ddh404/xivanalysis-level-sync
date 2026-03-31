@@ -1,0 +1,27 @@
+import {ActionTimeline} from './ActionTimeline'
+import {AoEUsages} from './AoEUsages'
+import {CooldownDowntime} from './CooldownDowntime'
+import {Defensives} from './Defensives'
+import {Gauge} from './Gauge'
+import {Inspiration} from './Inspiration'
+import {Procs} from './Procs'
+import {StarryMuse} from './StarryMuse'
+import {Swiftcast} from './Swiftcast'
+import {Tincture} from './Tincture'
+import {Utilities} from './Utilities'
+import {Weaving} from './Weaving'
+
+export const modules = [
+	ActionTimeline,
+	AoEUsages,
+	CooldownDowntime,
+	Defensives,
+	Gauge,
+	Inspiration,
+	Procs,
+	StarryMuse,
+	Swiftcast,
+	Tincture,
+	Utilities,
+	Weaving,
+]

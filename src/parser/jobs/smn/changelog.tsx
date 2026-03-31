@@ -1,0 +1,19 @@
+import {CONTRIBUTORS} from 'data/CONTRIBUTORS'
+
+export const changelog = [
+	{
+		date: new Date('2025-04-20'),
+		Changes: () => <>Add informational display of Swiftcast and Lucid Dreaming usage/cooldown availability adjacent to Defensives.</>,
+		contributors: [CONTRIBUTORS.AKAIRYU],
+	},
+	{
+		date: new Date('2024-11-14'),
+		Changes: () => <>Added new Crimson Strike Ready status for 7.1</>,
+		contributors: [CONTRIBUTORS.KELOS],
+	},
+	{
+		date: new Date('2024-7-11'),
+		Changes: () => <>Initial Dawntrail implementation</>,
+		contributors: [CONTRIBUTORS.KELOS],
+	},
+]

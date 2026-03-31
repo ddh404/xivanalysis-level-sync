@@ -1,0 +1,5 @@
+export const DISPLAY_ORDER = {
+	AETHERFLOW: 51,
+	DOTS: 52,
+	SWIFTCAST: 99,
+}

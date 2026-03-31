@@ -1,0 +1,39 @@
+@value themeBackdrop from "theme.module.css";
+
+body {
+	background: themeBackdrop;
+
+	/* Colours 'cus SUI doesn't for w/e reason */
+	--info: var(--blue, blue);
+	--success: var(--green, green);
+	--warning: var(--yellow, yellow);
+	--error: var(--red, red);
+}
+
+/* Apparently !important and calc() are SUI's favourite dish. Why the fuck am I using this thing again? */
+.ui.attached {
+	width: 100% !important;
+}
+
+/*
+Dimmer sits at 1000, which _also_ happens to be the where the loaders sit. Sidebar needs to be in-between :blobrage:
+Resulting stack:
+ - 1000: loaders
+ - 1001: sidebar
+ - 1002: header
+ - 1003: dimmer
+*/
+.ui.dimmer {
+	z-index: 1003 !important;
+}
+
+/* Utility shit */
+.pull-left { float: left; }
+.pull-right { float: right; }
+
+.text-info { color: var(--info); }
+.text-success { color: var(--success); }
+.text-warning { color: var(--warning); }
+.text-error { color: var(--error); }
+.text-orange { color: var(--orange); }
+.text-grey { color: var(--grey); }

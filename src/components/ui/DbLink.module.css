@@ -1,0 +1,19 @@
+.detail {
+	/* This is shit. This is also copied from semantic. What a coinkydink. */
+	z-index: 1900;
+}
+
+.link {
+	color: inherit;
+	border-bottom: 1px dotted currentColor;
+}
+
+.image {
+	height: 1.4285em;
+	vertical-align: bottom;
+	filter: drop-shadow(0px 0px 1px rgba(0, 0, 0, 0.5));
+}
+
+.image + .link {
+	margin-left: .25em;
+}

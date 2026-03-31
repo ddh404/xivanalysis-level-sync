@@ -1,0 +1,92 @@
+@value gutter, md, themeText, themeBackground from "theme.module.css";
+
+.background {
+	position: fixed;
+	top: -10px;
+	left: -10px;
+	bottom: -10px;
+	right: -10px;
+	z-index: -1;
+	background: url(./background.jpg) no-repeat center;
+	background-size: cover;
+	filter: blur(5px);
+}
+
+.background::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: themeBackground;
+	opacity: .5;
+}
+
+.logo {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	font-size: 24px;
+	font-weight: bold;
+	text-align: center;
+}
+
+.logo img {
+	display: block;
+	margin: 0 auto 5px;
+	max-width: 120px;
+}
+
+.search {
+	padding: 0 gutter;
+	width: 100%;
+	color: themeText;
+}
+
+.support {
+	margin-top: 20px;
+}
+
+.about {
+	cursor: pointer;
+	border-bottom: 1px dashed themeText;
+	margin-bottom: 50px;
+}
+
+.options {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	width: 100%;
+	height: 40px;
+	padding: 0 10px;
+}
+
+.i18nMenu {
+	width: 250px;
+}
+
+@media md {
+	.logo {
+		display: none;
+	}
+
+	.search {
+		padding: 0;
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+	}
+
+	.support {
+		margin-top: 50px;
+	}
+
+	.options {
+		display: none;
+	}
+}
