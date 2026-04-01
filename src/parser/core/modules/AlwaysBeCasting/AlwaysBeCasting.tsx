@@ -73,7 +73,6 @@ export class AlwaysBeCasting extends AlwaysBeCastingAnalyser {
 	private gcdDowntimeWindows: {current?: GcdDowntimeWindow, history: GcdDowntimeWindow[]} = {
 		history: [],
 	}
-	private gcdLength = this.globalCooldown.getDuration()
 
 	private outputModules: Array<{
 		module: AlwaysBeCastingAnalyser,
@@ -122,7 +121,7 @@ export class AlwaysBeCasting extends AlwaysBeCastingAnalyser {
 			return
 		}
 
-		const leadingEventGcdLength = this.castTime.recastForEvent(tracker.current.leadingEvent) ?? this.gcdLength
+		const leadingEventGcdLength = this.castTime.recastForEvent(tracker.current.leadingEvent) ?? this.globalCooldown.getDuration()
 		// Add the current window to the history array if we've exceeded the GCD length
 		if (endTime - tracker.current.start > leadingEventGcdLength + GCD_ERROR_OFFSET) {
 			tracker.current.stop = endTime
@@ -246,7 +245,7 @@ export class AlwaysBeCasting extends AlwaysBeCastingAnalyser {
 				windows.start,
 				windows.stop ?? windows.start,
 			)
-			return duration === 0 && (windows.stop ?? windows.start) - windows.start > this.gcdLength + GCD_ERROR_OFFSET
+			return duration === 0 && (windows.stop ?? windows.start) - windows.start > this.globalCooldown.getDuration() + GCD_ERROR_OFFSET
 		})
 		// Filter out periods that duplicate detections from the weaving module
 		this.gcdDowntimeWindows.history = this.gcdDowntimeWindows.history.filter(window => {
@@ -289,7 +288,7 @@ export class AlwaysBeCasting extends AlwaysBeCastingAnalyser {
 	}
 
 	override getDelayPerIssue(downtime: GcdDowntimeWindow) {
-		return (downtime.stop ?? downtime.start) - downtime.start - this.gcdLength
+		return (downtime.stop ?? downtime.start) - downtime.start - this.globalCooldown.getDuration()
 	}
 
 	override getTotalDelay() {
