@@ -66,7 +66,7 @@ export function Breadcrumbs() {
 		<Helmet>
 			<title>
 				{segments.length > 0 ? `${segments[segments.length - 1].title} | ` : ''}
-				xivanalysis
+				xivanalysis-level-sync
 			</title>
 		</Helmet>
 

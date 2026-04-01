@@ -9,7 +9,7 @@ export const Root = () => (
 	<StoreProvider>
 		<I18nLoader>
 			<TooltipProvider>
-				<Router future={{
+				<Router basename={process.env.PUBLIC_URL} future={{
 					v7_relativeSplatPath: true,
 				}}>
 					<BreadcrumbProvider>

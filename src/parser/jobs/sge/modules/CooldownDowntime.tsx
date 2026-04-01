@@ -9,11 +9,12 @@ export class CooldownDowntime extends CoreCooldownDowntime {
 	 * DPS cooldowns. Modified description since Phlegma is itself a GCD.
 	 */
 	trackedCds = [
-		{
-			cooldowns: [this.data.actions.PHLEGMA_III],
-		},
+		{cooldowns: [this.data.actions.PHLEGMA_III], minLevel: 82},
+		{cooldowns: [this.data.actions.PHLEGMA_II], minLevel: 72, maxLevel: 81},
+		{cooldowns: [this.data.actions.PHLEGMA], minLevel: 26, maxLevel: 71},
 		{
 			cooldowns: [this.data.actions.PSYCHE],
+			minLevel: 92,
 		},
 	]
 	override checklistDescription = <Trans id="sge.cooldownDowntime.ogcd-cd-metric"><DataLink showIcon={false} action="PHLEGMA_III"/> is stronger than <DataLink showIcon={false} action="DOSIS_III" />. Try not to lose out on using it by sitting on both charges for too long.</Trans>

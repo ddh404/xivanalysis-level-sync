@@ -21,12 +21,7 @@ export function GlobalSidebar({centerLogo}: GlobalSidebarProps) {
 				styles.logo,
 				centerLogo && styles.center,
 			)}>
-				<img
-					src={process.env.PUBLIC_URL + '/logo.png'}
-					alt="logo"
-					className={styles.logoImage}
-				/>
-				xivanalysis
+				xivanalysis-level-sync
 			</Link>
 
 			<Breadcrumbs />

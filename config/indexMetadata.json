@@ -1,6 +1,5 @@
 {
-	"title": "xivanalysis",
-	"favicon": "./public/logo.png",
+	"title": "xivanalysis-level-sync",
 	"lang": "en",
 	"meta": [{
 		"name": "viewport",
@@ -13,7 +12,7 @@
 		"content": "Automated performance analysis and suggestion platform for Final Fantasy XIV."
 	}, {
 		"property": "og:title",
-		"content": "xivanalysis"
+		"content": "xivanalysis-level-sync"
 	}, {
 		"property": "og:description",
 		"content": "Automated performance analysis and suggestion platform for Final Fantasy XIV."

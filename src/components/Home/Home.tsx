@@ -27,15 +27,7 @@ export class Home extends Component {
 		return <>
 			<div className={styles.background}/>
 
-			<div className={styles.logo}>
-				<img
-					src={process.env.PUBLIC_URL + '/logo.png'}
-					alt="logo"
-				/>
-					xivanalysis
-			</div>
-
-			<div className={styles.search}>
+<div className={styles.search}>
 				<ReportSearch />
 
 				<Modal trigger={(

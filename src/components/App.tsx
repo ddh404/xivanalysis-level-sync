@@ -48,15 +48,7 @@ export function App() {
 				className={styles.hamburger}
 				onClick={() => setSidebarOpen(value => !value)}
 			/>
-			<Link to="/" className={styles.logo}>
-				<img
-					src={process.env.PUBLIC_URL + '/logo.png'}
-					alt="logo"
-					className={styles.logoImage}
-				/>
-					xivanalysis
-			</Link>
-		</div>
+			</div>
 
 		<div className={classnames(
 			styles.container,
