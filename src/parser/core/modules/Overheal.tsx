@@ -417,7 +417,7 @@ export class Overheal extends Analyser {
 				styled
 				fluid
 				defaultActiveIndex={rows.map((row, idx) => row.startActive ? idx : undefined).filter(isDefined)}
-				panels={rows.map(row => row.panel)}
+				panels={rows.map((row, idx) => ({...row.panel, key: idx}))}
 			/>
 		</Fragment>
 	}
@@ -456,10 +456,12 @@ export class Overheal extends Analyser {
 				content: {
 					content: <Table compact unstackable celled>
 						<Table.Header>
-							<Table.HeaderCell><Trans id="core.overheal.table.source.header">Heal Source</Trans></Table.HeaderCell>
-							<Table.HeaderCell textAlign="right"><Trans id="core.overheal.table.count.header">Count</Trans></Table.HeaderCell>
-							<Table.HeaderCell textAlign="right"><Trans id="core.overheal.table.hps.header">HPS</Trans></Table.HeaderCell>
-							<Table.HeaderCell textAlign="right"><Trans id="core.overheal.table.overheal-percent.header">Overheal %</Trans></Table.HeaderCell>
+							<Table.Row>
+								<Table.HeaderCell><Trans id="core.overheal.table.source.header">Heal Source</Trans></Table.HeaderCell>
+								<Table.HeaderCell textAlign="right"><Trans id="core.overheal.table.count.header">Count</Trans></Table.HeaderCell>
+								<Table.HeaderCell textAlign="right"><Trans id="core.overheal.table.hps.header">HPS</Trans></Table.HeaderCell>
+								<Table.HeaderCell textAlign="right"><Trans id="core.overheal.table.overheal-percent.header">Overheal %</Trans></Table.HeaderCell>
+							</Table.Row>
 						</Table.Header>
 						<Table.Body>{tableBody}</Table.Body>
 					</Table>,

@@ -30,7 +30,7 @@ export function Checklist({rules}:ChecklistProps) {
 		}
 		return {
 			// This should be a handle of some sort
-			key: index,
+			key: `rule-${index}`,
 			title: {
 				className: styles.title,
 				content: <>
