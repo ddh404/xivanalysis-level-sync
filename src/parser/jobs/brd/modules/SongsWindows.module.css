@@ -1,0 +1,48 @@
+@value gutter from "theme.module.css";
+
+.checkbox {
+	position: absolute !important;
+	top: gutter;
+	right: gutter;
+}
+
+.songBar {
+	display: flex;
+	height: 20px;
+	width: 300px;
+	background-color: transparent;
+	border-radius: 3px;
+	overflow: hidden;
+}
+
+.songSegment {
+	height: 100%;
+	flex-shrink: 0;
+}
+
+.gapSegment {
+	height: 100%;
+	flex-shrink: 0;
+	background-color: rgba(0, 0, 0, 0.25);
+}
+
+.legend {
+	display: flex;
+	gap: 12px;
+	margin-bottom: 8px;
+	flex-wrap: wrap;
+}
+
+.legendItem {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+}
+
+.legendColor {
+	display: inline-block;
+	width: 12px;
+	height: 12px;
+	border-radius: 2px;
+	flex-shrink: 0;
+}

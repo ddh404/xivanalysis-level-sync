@@ -13,11 +13,13 @@ import {MultiHitSkills} from './MultiHitSkills'
 import {OGCDDowntime} from './OGCDDowntime'
 import {RefulgentProcs} from './RefulgentProcs'
 import {Repertoire} from './Repertoire'
+import {SongsWindows} from './SongsWindows'
 import {SoulVoice} from './SoulVoice'
 
 export const modules = [
 	ActionTimeline,
 	AlwaysBeCasting,
+	SongsWindows,
 	Repertoire,
 	SoulVoice,
 	Coda,
