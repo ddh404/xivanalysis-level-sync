@@ -11,6 +11,7 @@ import {dependency} from 'parser/core/Injectable'
 import {CastTime} from 'parser/core/modules/CastTime'
 import {Checklist, Requirement, Rule} from 'parser/core/modules/Checklist'
 import {Data} from 'parser/core/modules/Data'
+import {Death} from 'parser/core/modules/Death'
 import {Downtime} from 'parser/core/modules/Downtime'
 import {GlobalCooldown} from 'parser/core/modules/GlobalCooldown'
 import {SpeedAdjustments} from 'parser/core/modules/SpeedAdjustments'
@@ -52,6 +53,7 @@ export class AlwaysBeCasting extends AlwaysBeCastingAnalyser {
 	@dependency protected castTime!: CastTime
 	@dependency protected checklist!: Checklist
 	@dependency protected data!: Data
+	@dependency protected death!: Death
 	@dependency protected downtime!: Downtime
 	@dependency protected globalCooldown!: GlobalCooldown
 	@dependency protected speedAdjustments!: SpeedAdjustments
@@ -229,9 +231,27 @@ export class AlwaysBeCasting extends AlwaysBeCastingAnalyser {
 
 	protected getUptimePercent(): number {
 		this.debug(`Observed ${this.gcdsCounted} GCDs for a total of ${this.gcdUptime} ms of uptime`)
-		const fightDuration = this.parser.currentDuration - this.downtime.getDowntime()
+
+		// Merge downtime windows and death windows, then subtract the combined total
+		const allWindows = [
+			...this.downtime.getDowntimeWindows(),
+			...this.death.getWindows(this.parser.actor.id),
+		].sort((a, b) => a.start - b.start)
+
+		const mergedWindows: Array<{start: number, end: number}> = []
+		for (const window of allWindows) {
+			const last = mergedWindows[mergedWindows.length - 1]
+			if (last != null && window.start <= last.end) {
+				last.end = Math.max(last.end, window.end)
+			} else {
+				mergedWindows.push({...window})
+			}
+		}
+
+		const totalExcluded = mergedWindows.reduce((acc, w) => acc + w.end - w.start, 0)
+		const fightDuration = this.parser.currentDuration - totalExcluded
 		const uptime = this.gcdUptime / fightDuration * 100
-		this.debug(`Total fight duration: ${this.parser.currentDuration} - Downtime: ${this.downtime.getDowntime()} - Uptime percentage ${uptime}`)
+		this.debug(`Total fight duration: ${this.parser.currentDuration} - Excluded (downtime+death): ${totalExcluded} - Uptime percentage ${uptime}`)
 		return uptime
 	}
 

@@ -31,11 +31,17 @@ declare module 'event' {
 	}
 }
 
+export interface DeathWindow {
+	start: number
+	end: number
+}
+
 export interface ActorDeathInfo {
 	timestampDeath?: Event['timestamp']
 	timestampTranscendent?: Event['timestamp']
 	count: number
 	duration: number
+	windows: DeathWindow[]
 	raiseHook?: EventHook<Events['actorUpdate']>
 }
 
@@ -56,6 +62,10 @@ export class Death extends Analyser {
 
 	getCount(actorId: Actor['id']) {
 		return this.getActorInfo(actorId).count
+	}
+
+	getWindows(actorId: Actor['id']): DeathWindow[] {
+		return this.getActorInfo(actorId).windows
 	}
 
 	getDuration(actorId: Actor['id']) {
@@ -90,7 +100,7 @@ export class Death extends Analyser {
 	private getActorInfo(actorId: Actor['id']): ActorDeathInfo {
 		let actorInfo = this.info.get(actorId)
 		if (actorInfo == null) {
-			actorInfo = {count: 0, duration: 0}
+			actorInfo = {count: 0, duration: 0, windows: []}
 			this.info.set(actorId, actorInfo)
 		}
 		return actorInfo
@@ -167,7 +177,9 @@ export class Death extends Analyser {
 			this.addDeathToTimeline(actorInfo.timestampDeath, timestamp)
 		}
 
-		actorInfo.duration += timestamp - actorInfo.timestampDeath
+		const deadDuration = timestamp - actorInfo.timestampDeath
+		actorInfo.duration += deadDuration
+		actorInfo.windows.push({start: actorInfo.timestampDeath, end: timestamp})
 		actorInfo.timestampDeath = undefined
 
 		if (actorInfo.raiseHook != null) {
