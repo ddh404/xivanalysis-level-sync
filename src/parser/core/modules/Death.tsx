@@ -65,7 +65,11 @@ export class Death extends Analyser {
 	}
 
 	getWindows(actorId: Actor['id']): DeathWindow[] {
-		return this.getActorInfo(actorId).windows
+		const actorInfo = this.getActorInfo(actorId)
+		if (actorInfo.timestampDeath == null) {
+			return actorInfo.windows
+		}
+		return [...actorInfo.windows, {start: actorInfo.timestampDeath, end: this.parser.currentEpochTimestamp}]
 	}
 
 	getDuration(actorId: Actor['id']) {

@@ -218,12 +218,19 @@ export class AlwaysBeCasting extends AlwaysBeCastingAnalyser {
 
 	/* Must be accessed after all events have been processed */
 	protected get gcdUptime(): number {
+		const deathWindows = this.death.getWindows(this.parser.actor.id)
 		return this.gcdUptimeEvents.reduce((totalUptime: number, event: GcdUptimeEvent) => {
-			if (this.downtime.isDowntime(event.time + event.gcdUptime)) {
+			const gcdEnd = event.time + event.gcdUptime
+			if (this.downtime.isDowntime(gcdEnd)) {
 				// If the GCD ends in a downtime window, we only count the part that occurred in uptime
-				this.debug(`GCD ends in downtime at ${this.parser.formatEpochTimestamp(event.time + event.gcdUptime)}`)
-				const downtimeWindow = this.downtime.getDowntimeWindows(event.time, event.time + event.gcdUptime)[0]
-				return totalUptime + (downtimeWindow?.start ?? event.time + event.gcdUptime) - event.time
+				this.debug(`GCD ends in downtime at ${this.parser.formatEpochTimestamp(gcdEnd)}`)
+				const downtimeWindow = this.downtime.getDowntimeWindows(event.time, gcdEnd)[0]
+				return totalUptime + (downtimeWindow?.start ?? gcdEnd) - event.time
+			}
+			// If a death window starts during this GCD's recast, clip uptime at the death start
+			const deathDuringGcd = deathWindows.find(w => w.start >= event.time && w.start < gcdEnd)
+			if (deathDuringGcd != null) {
+				return totalUptime + deathDuringGcd.start - event.time
 			}
 			return totalUptime + event.gcdUptime
 		}, 0)
