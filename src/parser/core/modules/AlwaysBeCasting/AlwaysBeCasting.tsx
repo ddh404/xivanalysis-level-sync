@@ -236,10 +236,8 @@ export class AlwaysBeCasting extends AlwaysBeCastingAnalyser {
 		}, 0)
 	}
 
-	protected getUptimePercent(): number {
-		this.debug(`Observed ${this.gcdsCounted} GCDs for a total of ${this.gcdUptime} ms of uptime`)
-
-		// Merge downtime windows and death windows, then subtract the combined total
+	/** Returns fight duration with both downtime and death windows excluded (merged to avoid double-counting). */
+	protected getEffectiveFightDuration(): number {
 		const allWindows = [
 			...this.downtime.getDowntimeWindows(),
 			...this.death.getWindows(this.parser.actor.id),
@@ -256,9 +254,14 @@ export class AlwaysBeCasting extends AlwaysBeCastingAnalyser {
 		}
 
 		const totalExcluded = mergedWindows.reduce((acc, w) => acc + w.end - w.start, 0)
-		const fightDuration = this.parser.currentDuration - totalExcluded
+		return this.parser.currentDuration - totalExcluded
+	}
+
+	protected getUptimePercent(): number {
+		this.debug(`Observed ${this.gcdsCounted} GCDs for a total of ${this.gcdUptime} ms of uptime`)
+		const fightDuration = this.getEffectiveFightDuration()
 		const uptime = this.gcdUptime / fightDuration * 100
-		this.debug(`Total fight duration: ${this.parser.currentDuration} - Excluded (downtime+death): ${totalExcluded} - Uptime percentage ${uptime}`)
+		this.debug(`Total fight duration: ${this.parser.currentDuration} - Effective fight duration (excl. downtime+death): ${fightDuration} - Uptime percentage ${uptime}`)
 		return uptime
 	}
 

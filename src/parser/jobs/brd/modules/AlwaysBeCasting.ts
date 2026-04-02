@@ -53,7 +53,7 @@ export class AlwaysBeCasting extends CoreAlwaysBeCasting {
 
 	override getUptimePercent(): number {
 		this.debug(`Observed ${this.gcdsCounted} GCDs for a total of ${this.gcdUptime} ms of uptime`)
-		const fightDuration = this.parser.currentDuration - this.downtime.getDowntime()
+		const fightDuration = this.getEffectiveFightDuration()
 		const armyDuration = this.armyHistory.reduce((acc, army) => {
 			const downtime = this.downtime.getDowntime(
 				army.start,

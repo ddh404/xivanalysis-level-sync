@@ -133,7 +133,7 @@ export class AlwaysBeCasting extends CoreAlwaysBeCasting {
 	}
 
 	override getUptimePercent(): number {
-		const fightDuration = this.parser.currentDuration - this.downtime.getDowntime()
+		const fightDuration = this.getEffectiveFightDuration()
 		const maxChannelUptime = this.parser.pull.timestamp + this.parser.pull.duration
 		const channelDuration = this.channelHistory.entries.reduce((acc, channel) => {
 			const downtime = this.downtime.getDowntime(

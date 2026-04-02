@@ -91,8 +91,8 @@ export class ReportStore {
 			|| response.lang == null
 		) {
 			runInAction(() => this.report = undefined)
-			// Delete the cached processing response so the next request hits FF Logs fresh                                                                                                                                                                                   
-			window.caches.delete(code).catch(() => undefined)   
+			// Delete the cached processing response so the next request hits FF Logs fresh
+			window.caches.delete(code).catch(() => undefined)
 			globalErrorStore.setGlobalError(new Errors.ReportProcessingError())
 			settingsStore.setBypassCacheNextRequest(true)
 			return

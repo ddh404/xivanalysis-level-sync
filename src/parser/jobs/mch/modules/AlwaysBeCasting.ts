@@ -71,7 +71,7 @@ export class AlwaysBeCasting extends CoreAlwaysBeCasting {
 	}
 
 	override getUptimePercent(): number {
-		const fightDuration = this.parser.currentDuration - this.downtime.getDowntime()
+		const fightDuration = this.getEffectiveFightDuration()
 		const flameDuration = this.flameHistory.reduce((acc, flame) => {
 			const downtime = this.downtime.getDowntime(
 				flame.start,
