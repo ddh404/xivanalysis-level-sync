@@ -873,6 +873,7 @@
   "pct.procs.dropped-stars.why": "你的<0/>状态超时掉了{droppedStars, plural, one {# 次} other {# 次}}。",
   "pct.starrymuse.suggestions.expected-actions.content": "为了达到最大输出，你应该确保<0/>期间使用了所有推荐的技能。",
   "pct.starrymuse.suggestions.limited-actions.content": "避免在<0/>期间使用彩绘技能。咏唱<1/>可以提供更高的威力，让你在爆发期里造成更多伤害。",
+  "pct.starrymuse.table-header.lv80-cn": "<0/>中最好包含3次<1/>、4次<2/>連擊、1次<3/>以及1次<4/>。\n<5/>注意在最後一個<6/>連擊要求<7/>才能打進20秒內(2.5GCD時)，沒<8/>的話可以用<9/>替代、<10/>(僅在80等時)打進團輔賺威力。",
   "pct.starrymuse.table-header": "你的<0/>中应该有<1/>、<2/>和至少一个<3/>，其余时间使用<4/>和<5/>连击。<6/>如果为了对齐buff而使用了更多构想技能的话，你可以把<7/>和<8/>挪出去。<9/>试着确保你每次爆发窗口期里都使用了如下显示的技能。",
   "pct.starrymuse.title": "星空构想",
   "pct.swiftcast.missed.suggestion.content": "不要让 <0/> 过期。该瞬发可用于使用 <1/> 同时进行长距离移动或穿插能力，以及在boss离场或死亡前打出 <2/> 。",
