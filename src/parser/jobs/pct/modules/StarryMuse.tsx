@@ -16,6 +16,7 @@ import {ADDITIVE_SPELLS, CREATURE_MOTIFS, CREATURE_MUSES, HAMMER_COMBO, SUBTRACT
 import {DISPLAY_ORDER} from './DISPLAY_ORDER'
 
 const BASE_GCDS_PER_WINDOW = 9
+const LV80_GCDS_PER_WINDOW = 7
 const MAX_LEVEL_FOR_LV80_ROTATION = 80
 
 export class StarryMuse extends RaidBuffWindow {
@@ -66,15 +67,24 @@ export class StarryMuse extends RaidBuffWindow {
 
 		// Since a 7.2 6Sub window will have one RGBW GCD, we need a count evaluator...
 		if (this.isChineseEdition) {
-			this.addEvaluator(new ExpectedGcdCountEvaluator({
-				expectedGcds: BASE_GCDS_PER_WINDOW,
+			const sharedGcdEvaluatorOptions = {
 				globalCooldown: this.globalCooldown,
 				hasStacks: false,
 				suggestionIcon: '',
 				suggestionContent: <></>,
 				suggestionWindowName: <></>,
 				severityTiers: [],
-			}))
+			}
+			const lv80GcdEvaluator = new ExpectedGcdCountEvaluator({expectedGcds: LV80_GCDS_PER_WINDOW, ...sharedGcdEvaluatorOptions})
+			const lv90GcdEvaluator = new ExpectedGcdCountEvaluator({expectedGcds: BASE_GCDS_PER_WINDOW, ...sharedGcdEvaluatorOptions})
+			this.addEvaluator({
+				suggest: (windows) => this.playerLevel <= MAX_LEVEL_FOR_LV80_ROTATION
+					? lv80GcdEvaluator.suggest(windows)
+					: lv90GcdEvaluator.suggest(windows),
+				output: (windows) => this.playerLevel <= MAX_LEVEL_FOR_LV80_ROTATION
+					? lv80GcdEvaluator.output(windows)
+					: lv90GcdEvaluator.output(windows),
+			})
 		}
 
 		const sharedEvaluatorOptions = {
