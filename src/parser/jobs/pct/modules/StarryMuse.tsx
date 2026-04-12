@@ -3,7 +3,6 @@ import {Trans} from '@lingui/react/macro'
 import {ActionLink, DataLink} from 'components/ui/DbLink'
 import {RotationTargetOutcome} from 'components/ui/RotationTable'
 import {Action} from 'data/ACTIONS'
-import {GameEdition} from 'data/EDITIONS'
 import {Status} from 'data/STATUSES'
 import {dependency} from 'parser/core/Injectable'
 import {RaidBuffWindow, ExpectedActionGroupsEvaluator, EvaluatedAction, TrackedActionGroup, LimitedActionsEvaluator, TrackedAction, ExpectedGcdCountEvaluator, EvaluationOutput} from 'parser/core/modules/ActionWindow'
@@ -34,8 +33,6 @@ export class StarryMuse extends RaidBuffWindow {
 	private creatureMotifs = CREATURE_MOTIFS.map(key => this.data.actions[key])
 	private subtractiveActions = SUBTRACTIVE_SINGLE_TARGET.map(key => this.data.actions[key])
 
-	private isChineseEdition = this.parser.report.edition === GameEdition.CHINESE
-
 	private get playerLevel() {
 		return this.actors.get(this.parser.actor).level ?? 100
 	}
@@ -49,7 +46,7 @@ export class StarryMuse extends RaidBuffWindow {
 	</Message>
 
 	override output() {
-		if (this.isChineseEdition && this.playerLevel <= MAX_LEVEL_FOR_LV80_ROTATION) {
+		if (this.playerLevel <= MAX_LEVEL_FOR_LV80_ROTATION) {
 			this.prependMessages = <Message>
 				<Trans id="pct.starrymuse.table-header.lv80-cn">
 					Your <DataLink status="STARRY_MUSE" /> windows should contain 3 <DataLink status="HAMMER_TIME" /> combo casts, 4 <DataLink status="SUBTRACTIVE_PALETTE" /> combo casts, 1 <DataLink action="LIVING_MUSE" />, and 1 <DataLink action="MOG_OF_THE_AGES" />.<br/>
@@ -65,8 +62,8 @@ export class StarryMuse extends RaidBuffWindow {
 
 		this.ignoreActions([this.data.actions.STAR_PRISM_CURE.id])
 
-		// Since a 7.2 6Sub window will have one RGBW GCD, we need a count evaluator...
-		if (this.isChineseEdition) {
+		// Since a lv80 6Sub window will have one RGBW GCD, we need a count evaluator...
+		{
 			const sharedGcdEvaluatorOptions = {
 				globalCooldown: this.globalCooldown,
 				hasStacks: false,
@@ -136,8 +133,8 @@ export class StarryMuse extends RaidBuffWindow {
 			},
 		]
 
-		// Shouldn't also need an Expected GCD Count evaluator (for patches other than 7.2) since the expected action groups will effectively enforce that
-		if (this.isChineseEdition) {
+		// Shouldn't also need an Expected GCD Count evaluator (for level > 80) since the expected action groups will effectively enforce that
+		{
 			const lv80Groups = [
 				{
 					actions: this.hammerActions,
@@ -212,15 +209,10 @@ export class StarryMuse extends RaidBuffWindow {
 					}
 				},
 			})
-		} else {
-			this.addEvaluator(new ExpectedActionGroupsEvaluator({
-				expectedActionGroups: lv90Groups,
-				...sharedEvaluatorOptions,
-			}))
 		}
 
-		// In Patch 7.2, a 6sub window will have one of RGBW, so we shouldn't add the limited actions evaluator warning against it
-		if (!this.isChineseEdition) {
+		// At lv80, a 6sub window will have one of RGBW, so we shouldn't add the limited actions evaluator warning against it
+		if (this.playerLevel > MAX_LEVEL_FOR_LV80_ROTATION) {
 			this.addEvaluator(new LimitedActionsEvaluator({
 				expectedActions: ADDITIVE_SPELLS.map<TrackedAction>(key => {
 					return {
@@ -243,8 +235,8 @@ export class StarryMuse extends RaidBuffWindow {
 	private adjustExpectedActionGroupCounts(window: HistoryEntry<EvaluatedAction[]>, action: TrackedActionGroup): number {
 		const motifsPainted = this.countActionsUsed(window, this.creatureMotifs)
 
-		// In 7.2, using fewer hammers is acceptable as long as the earlier hammers are skipped
-		if (this.isChineseEdition && action.actions.some(action => this.hammerActions.includes(action))) {
+		// At lv80, using fewer hammers is acceptable as long as the earlier hammers are skipped
+		if (this.playerLevel <= MAX_LEVEL_FOR_LV80_ROTATION && action.actions.some(action => this.hammerActions.includes(action))) {
 			let adjustment = 0
 			// Yes, this disgusting nesting is necessary to make sure we're not reducing the count because they used weaker hammers and skipped the stronger ones
 			if (this.countActionsUsed(window, [this.data.actions.HAMMER_STAMP]) === 0) {
@@ -267,8 +259,8 @@ export class StarryMuse extends RaidBuffWindow {
 
 			let adjustment = 0
 
-			// In Patch 7.2, hammers can be replaced with additional subtractive spells
-			if (this.isChineseEdition) {
+			// At lv80, hammers can be replaced with additional subtractive spells
+			if (this.playerLevel <= MAX_LEVEL_FOR_LV80_ROTATION) {
 				const hammersUsed = this.countActionsUsed(window, this.hammerActions)
 				// If they didn't use a second comet in an H2/H3 window, they should use a fourth subtractive spell
 				if (hammersUsed === 2 && cometsUsed < 2) {
