@@ -43,31 +43,44 @@ export class AbilityDowntime extends CooldownDowntime { // Order by cooldown len
 		{
 			cooldowns: [this.data.actions.GNASHING_FANG],
 			firstUseOffset: FIRST_USE_OFFSET_GNASHING_FANG,
+			minLevel: 60,
 		},
 		{
-			cooldowns: [this.data.actions.BLASTING_ZONE, this.data.actions.DANGER_ZONE],
+			cooldowns: [this.data.actions.BLASTING_ZONE],
 			firstUseOffset: FIRST_USE_OFFSET_PEWPEWZONE,
+			minLevel: 80,
+		},
+		{
+			cooldowns: [this.data.actions.DANGER_ZONE],
+			firstUseOffset: FIRST_USE_OFFSET_PEWPEWZONE,
+			minLevel: 18,
+			maxLevel: 79,
 		},
 		{
 			cooldowns: [this.data.actions.NO_MERCY],
 			firstUseOffset: FIRST_USE_OFFSET_NO_MERCY,
+			minLevel: 2,
 		},
 		{
 			cooldowns: [this.data.actions.SONIC_BREAK],
 			firseUseOffset: FIRST_USE_OFFSET_SONIC_BREAK,
+			minLevel: 54,
 		},
 		{
 			cooldowns: [this.data.actions.BOW_SHOCK],
 			firstUseOffset: FIRST_USE_OFFSET_BOWSHOCK,
+			minLevel: 62,
 		},
 		{
 			cooldowns: [this.data.actions.DOUBLE_DOWN],
 			firstUseOffset: FIRST_USE_OFFSET_DOUBLE_DOWN,
+			minLevel: 90,
 		},
 		{
 			cooldowns: [this.data.actions.BLOODFEST],
 			firstUseOffset: FIRST_USE_OFFSET_BLOODFEST,
 			allowedAverageDowntime: this.parser.patch.after('7.3') ? ALLOWED_BLOODFEST_HOLDTIME_POST_7_4 : ALLOWED_BLOODFEST_HOLDTIME_PRE_7_4,
+			minLevel: 76,
 		},
 	]
 }

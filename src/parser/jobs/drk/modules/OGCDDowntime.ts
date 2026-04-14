@@ -10,22 +10,33 @@ export class OGCDDowntime extends CooldownDowntime {
 		{
 			cooldowns: [this.data.actions.DELIRIUM],
 			firstUseOffset: 10000,
+			minLevel: 68,
+		},
+		{
+			cooldowns: [this.data.actions.BLOOD_WEAPON],
+			firstUseOffset: 10000,
+			minLevel: 35,
+			maxLevel: 67,
 		},
 		{
 			cooldowns: [this.data.actions.SALTED_EARTH],
 			firstUseOffset: 12500,
+			minLevel: 52,
 		},
 		{
 			cooldowns: [this.data.actions.CARVE_AND_SPIT, this.data.actions.ABYSSAL_DRAIN],
 			firstUseOffset: 17500,
+			minLevel: 60,
 		},
 		{
 			cooldowns: [this.data.actions.SHADOWBRINGER],
 			firstUseOffset: 20000,
+			minLevel: 90,
 		},
 		{
 			cooldowns: [this.data.actions.LIVING_SHADOW],
 			firstUseOffset: 5000,
+			minLevel: 80,
 		},
 	]
 
