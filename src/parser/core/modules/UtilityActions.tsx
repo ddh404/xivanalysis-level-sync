@@ -195,6 +195,10 @@ export abstract class Utilities extends Analyser {
 		return additionalUsageData.chargesBeforeNextUse > 0
 	}
 
+	protected getEffectiveCooldown(action: Action): number {
+		return action.cooldown || this.parser.pull.duration
+	}
+
 	private getAdditionalUsageData(action: Action, timestamp: number = this.parser.pull.timestamp): {chargesBeforeNextUse: number, availableTimestamp: number, useByTimestamp: number} {
 		let availableTimestamp: number, currentCharges
 
@@ -208,7 +212,7 @@ export abstract class Utilities extends Analyser {
 			currentCharges = chargesAvailableEvent?.current || 0
 		}
 
-		const cooldown = action.cooldown || this.parser.pull.duration
+		const cooldown = this.getEffectiveCooldown(action)
 		const nextEntry = this.getGroupUses(action).find(historyEntry => historyEntry.start > timestamp)
 		const useByTimestamp = nextEntry != null ? (nextEntry.start - cooldown) : (this.parser.pull.timestamp + this.parser.pull.duration)
 
