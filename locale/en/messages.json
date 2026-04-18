@@ -302,6 +302,8 @@
   "core.always-cast.gcd-delay-header": "GCD Delay",
   "core.always-cast.gcd-downtime.title": "GCD Downtime",
   "core.always-cast.gcd-uptime": "GCD Uptime",
+  "core.always-cast.gcd-uptime.note": "(time unable to act excluded: death, untargetable boss, fetters, stun, knockback...)",
+  "core.always-cast.gcd-uptime.healer-note": "(time unable to act excluded: death, untargetable boss, fetters, stun, knockback, raise cast...)",
   "core.always-cast.header.about": "This report identifies when your GCD was idle and for how long.",
   "core.always-cast.header.content": "Keeping your GCD rolling is the most important component of maximizing your damage.",
   "core.always-cast.header.interrupts": "This report identifies when your GCD was wasted by interrupting a cast.",

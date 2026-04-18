@@ -1,3 +1,4 @@
+import {AlwaysBeCasting} from './AlwaysBeCasting'
 import {ActionTimeline} from './ActionTimeline'
 import {AoEUsages} from './AoEUsages'
 import {CooldownDowntime} from './CooldownDowntime'
@@ -14,6 +15,7 @@ import {Weaving} from './Weaving'
 import {Zoe} from './Zoe'
 
 export const modules = [
+	AlwaysBeCasting,
 	AoEUsages,
 	ActionTimeline,
 	CooldownDowntime,

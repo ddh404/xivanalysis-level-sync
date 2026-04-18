@@ -1,3 +1,4 @@
+import {AlwaysBeCasting} from './AlwaysBeCasting'
 import {ActionTimeline} from './ActionTimeline'
 import {CastTime} from './CastTime'
 import {Defensives} from './Defensives'
@@ -14,6 +15,7 @@ import {Tincture} from './Tincture'
 import {Utilities} from './Utilities'
 
 export const modules = [
+	AlwaysBeCasting,
 	ActionTimeline,
 	CastTime,
 	Defensives,

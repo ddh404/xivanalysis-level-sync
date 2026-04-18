@@ -1,4 +1,5 @@
 import {LucidDreaming} from 'parser/core/modules/LucidDreaming'
+import {AlwaysBeCasting} from './AlwaysBeCasting'
 import {ActionTimeline} from './ActionTimeline'
 import {AoEUsages} from './AoEUsages'
 import {ArcanaSuggestions, ArcanaTracking} from './ArcanaTracking'
@@ -19,6 +20,7 @@ import {Tincture} from './Tincture'
 import {Utilities} from './Utilities'
 
 export const modules = [
+	AlwaysBeCasting,
 	ActionTimeline,
 	AoEUsages,
 	ArcanaSuggestions,

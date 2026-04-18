@@ -67,6 +67,12 @@ export class AlwaysBeCasting extends AlwaysBeCastingAnalyser {
 		rotation slowly.
 	</Trans>
 
+	protected get gcdUptimeRequirementNote(): JSX.Element {
+		return <div style={{color: 'grey', fontSize: '0.9em'}}>
+			<Trans id="core.always-cast.gcd-uptime.note">(time unable to act excluded: death, untargetable boss, fetters, stun, knockback...)</Trans>
+		</div>
+	}
+
 	protected gcdUptimeEvents: GcdUptimeEvent[] = []
 	protected gcdsCounted: number = 0
 
@@ -236,11 +242,20 @@ export class AlwaysBeCasting extends AlwaysBeCastingAnalyser {
 		}, 0)
 	}
 
+	/**
+	 * Subclasses may override to provide additional windows to exclude from the
+	 * effective fight duration (e.g. raise casts for healer jobs).
+	 */
+	protected getExtraExcludedWindows(): Array<{start: number, end: number}> {
+		return []
+	}
+
 	/** Returns fight duration with both downtime and death windows excluded (merged to avoid double-counting). */
 	protected getEffectiveFightDuration(): number {
 		const allWindows = [
 			...this.downtime.getDowntimeWindows(),
 			...this.death.getWindows(this.parser.actor.id),
+			...this.getExtraExcludedWindows(),
 		].sort((a, b) => a.start - b.start)
 
 		const mergedWindows: Array<{start: number, end: number}> = []
@@ -285,7 +300,7 @@ export class AlwaysBeCasting extends AlwaysBeCastingAnalyser {
 		if (this.gcdUptimeEvents.length === 0) {
 			return
 		}
-
+		const uptimePct = this.getUptimePercent()
 		this.checklist.add(new Rule({
 			name: <Trans id="core.always-cast.title">Always be casting</Trans>,
 			description: this.gcdUptimeSuggestionContent,
@@ -293,12 +308,17 @@ export class AlwaysBeCasting extends AlwaysBeCastingAnalyser {
 			requirements: [
 				new Requirement({
 					name: <Trans id="core.always-cast.gcd-uptime">GCD Uptime</Trans>,
-					percent: this.getUptimePercent(),
+					percent: uptimePct,
+					overrideDisplay: <>
+						{uptimePct.toFixed(2)}%
+						{this.gcdUptimeRequirementNote}
+					</>,
 				}),
 			],
 			target: UPTIME_TARGET,
 		}))
 	}
+
 
 	override get hasIssues() {
 		return this.gcdDowntimeWindows.history.length > 0

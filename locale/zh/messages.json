@@ -302,6 +302,8 @@
   "core.always-cast.gcd-delay-header": "GCD延迟",
   "core.always-cast.gcd-downtime.title": "GCD空转",
   "core.always-cast.gcd-uptime": "GCD覆盖率",
+  "core.always-cast.gcd-uptime.note": "（已扣除无法使用技能的时间：死亡、Boss 无法被选中、束缚、晕眩、击飞……）",
+  "core.always-cast.gcd-uptime.healer-note": "（已扣除无法使用技能的时间：死亡、Boss 无法被选中、束缚、晕眩、击飞、詠唱復活……）",
   "core.always-cast.header.about": "这个报告展示你在何时空转了GCD，以及空转了多久。",
   "core.always-cast.header.content": "保持你的GCD一直在转是最大化伤害的关键。",
   "core.always-cast.header.interrupts": "这个报告展示你在何时因打断了技能而浪费了GCD。",

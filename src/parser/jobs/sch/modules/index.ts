@@ -1,3 +1,4 @@
+import {AlwaysBeCasting} from './AlwaysBeCasting'
 import {Aetherflow} from './Aetherflow'
 import {CooldownDowntime} from './CooldownDowntime'
 import {Defensives} from './Defensives'
@@ -13,6 +14,7 @@ import {Utilities} from './Utilities'
 import {Weaving} from './Weaving'
 
 export const modules = [
+	AlwaysBeCasting,
 	Aetherflow,
 	CooldownDowntime,
 	Defensives,
