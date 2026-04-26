@@ -11,4 +11,15 @@ export class Defensives extends CoreDefensives {
 		this.data.actions.NEUTRAL_SECT,
 		this.data.actions.COLLECTIVE_UNCONSCIOUS,
 	]
+
+	protected override actionLevelGates = {
+		[this.data.actions.COLLECTIVE_UNCONSCIOUS.id]:  {minLevel: 58},
+		[this.data.actions.CELESTIAL_OPPOSITION.id]:    {minLevel: 60},
+		[this.data.actions.EARTHLY_STAR.id]:            {minLevel: 62},
+		[this.data.actions.CELESTIAL_INTERSECTION.id]:  {minLevel: 74},
+		[this.data.actions.HOROSCOPE.id]:               {minLevel: 76},
+		[this.data.actions.NEUTRAL_SECT.id]:            {minLevel: 80},
+		[this.data.actions.EXALTATION.id]:              {minLevel: 86},
+		[this.data.actions.MACROCOSMOS.id]:             {minLevel: 90},
+	}
 }
