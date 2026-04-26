@@ -13,6 +13,7 @@ import {OGCDDowntime} from './OGCDDowntime'
 import {SaltAndDarkness} from './SaltAndDarkness'
 import {StatusTimeline} from './StatusTimeline'
 import {Tincture} from './Tincture'
+import {Unmend} from './Unmend'
 
 export const modules = [
 	ActionTimeline,
@@ -29,5 +30,6 @@ export const modules = [
 	StatusTimeline,
 	DarkArtsLost,
 	Tincture,
+	Unmend,
 	EsteemWindow,
 ]

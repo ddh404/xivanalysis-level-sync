@@ -8,6 +8,7 @@ import {FightOrFlight} from './FightOrFlight'
 import {Gauge} from './Gauge'
 import {Requiescat} from './Requiescat'
 import {RoyalAuthority} from './RoyalAuthority'
+import {ShieldLob} from './ShieldLob'
 import {Tincture} from './Tincture'
 
 export const modules = [
@@ -21,5 +22,6 @@ export const modules = [
 	Gauge,
 	RoyalAuthority,
 	Requiescat,
+	ShieldLob,
 	Tincture,
 ]

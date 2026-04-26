@@ -5,7 +5,7 @@ import {ActionKey} from 'data/ACTIONS'
 import {Event, Events} from 'event'
 import {filter} from 'parser/core/filter'
 import {dependency} from 'parser/core/Injectable'
-import {BuffWindow, EvaluatedAction, ExpectedActionsEvaluator} from 'parser/core/modules/ActionWindow'
+import {BuffWindow, EvaluatedAction, EvaluationOutput, ExpectedActionsEvaluator, TrackedAction, TrackedActionsOptions} from 'parser/core/modules/ActionWindow'
 import {HistoryEntry} from 'parser/core/modules/ActionWindow/History'
 import {EndOfWindowHandlingMode} from 'parser/core/modules/ActionWindow/windows/BuffWindow'
 import {Actors} from 'parser/core/modules/Actors'
@@ -39,6 +39,23 @@ const REQUIESCAT_ACTIONS: ActionKey[] = [
 	'BLADE_OF_TRUTH',
 	'BLADE_OF_VALOR',
 ]
+
+interface LevelFilteredActionsOptions extends TrackedActionsOptions {
+	shouldShowAction: (action: TrackedAction) => boolean
+}
+
+class LevelFilteredActionsEvaluator extends ExpectedActionsEvaluator {
+	private readonly shouldShowAction: (action: TrackedAction) => boolean
+
+	constructor(opts: LevelFilteredActionsOptions) {
+		super(opts)
+		this.shouldShowAction = opts.shouldShowAction
+	}
+
+	override output(windows: Array<HistoryEntry<EvaluatedAction[]>>): EvaluationOutput[] {
+		return super.output(windows).filter((_, i) => this.shouldShowAction(this.expectedActions[i]))
+	}
+}
 
 export class Requiescat extends BuffWindow {
 	static override handle = 'requiescat'
@@ -76,12 +93,26 @@ export class Requiescat extends BuffWindow {
 			return isRequiescatAction(event.action)
 		})
 
-		this.addEvaluator(new ExpectedActionsEvaluator({
+		const bladeIds = [
+			this.data.actions.BLADE_OF_FAITH.id,
+			this.data.actions.BLADE_OF_TRUTH.id,
+			this.data.actions.BLADE_OF_VALOR.id,
+		]
+
+		this.addEvaluator(new LevelFilteredActionsEvaluator({
+			shouldShowAction: (action) => {
+				if (bladeIds.includes(action.action.id)) {
+					const level = this.actors.current.level
+					return level == null || level > 80
+				}
+				return true
+			},
 			expectedActions: [
 				{action: this.data.actions.CONFITEOR, expectedPerWindow: 1},
 				{action: this.data.actions.BLADE_OF_FAITH, expectedPerWindow: 1},
 				{action: this.data.actions.BLADE_OF_TRUTH, expectedPerWindow: 1},
 				{action: this.data.actions.BLADE_OF_VALOR, expectedPerWindow: 1},
+				{action: this.data.actions.HOLY_SPIRIT, expectedPerWindow: 0},
 			],
 			suggestionIcon: this.data.actions.REQUIESCAT.icon,
 			suggestionContent: <Trans id="pld.requiescat.suggestions.missed-confiteor.content">
@@ -90,34 +121,54 @@ export class Requiescat extends BuffWindow {
 			</Trans>,
 			suggestionWindowName: <DataLink action="REQUIESCAT" showIcon={false} />,
 			severityTiers: SEVERITIES.MISSED_CONFITEOR_GCDS,
-			adjustCount: this.adjustExpectedConfiteorGCDCount.bind(this),
+			adjustCount: this.adjustExpectedActionCount.bind(this),
 		}))
 
 		this.addEventHook({type: 'action', source: this.parser.actor.id, action: this.data.actions.REQUIESCAT.id}, () => this.requiescatUsages++)
 	}
 
-	private adjustExpectedConfiteorGCDCount(window: HistoryEntry<EvaluatedAction[]>) {
-		if (window.end == null) {
-			return 0
+	private adjustExpectedActionCount(window: HistoryEntry<EvaluatedAction[]>, action: TrackedAction): number {
+		const level = this.actors.current.level
+		const isLowLevel = level != null && level <= 80
+		const downtimeAdjust = this.calculateDowntimeAdjustment(window)
+
+		if (action.action.id === this.data.actions.BLADE_OF_FAITH.id
+			|| action.action.id === this.data.actions.BLADE_OF_TRUTH.id
+			|| action.action.id === this.data.actions.BLADE_OF_VALOR.id) {
+			return isLowLevel ? -action.expectedPerWindow : downtimeAdjust
 		}
 
+		if (action.action.id === this.data.actions.HOLY_SPIRIT.id) {
+			return isLowLevel ? 3 + downtimeAdjust : 0
+		}
+
+		return downtimeAdjust
+	}
+
+	private calculateDowntimeAdjustment(window: HistoryEntry<EvaluatedAction[]>): number {
+		if (window.end == null) { return 0 }
 		const originalWindowEnd = window.start + REQUIESCAT_DURATION
 		const downtimeInWindow = this.downtime.getDowntime(window.start, originalWindowEnd)
 		const adjustedWindowEnd = originalWindowEnd - downtimeInWindow
-		const adjustedWindowDuration = adjustedWindowEnd - window.start
-		if (adjustedWindowDuration < this.globalCooldown.getDuration()) {
+		if (adjustedWindowEnd - window.start < this.globalCooldown.getDuration()) {
 			return -1
 		}
-
 		return 0
 	}
 
 	override output() {
+		const level = this.actors.current.level
+		const isLowLevel = level != null && level <= 80
+
 		return <Fragment>
 			<Message>
-				<Trans id="pld.requiescat.table.note">Each of your <DataLink status="REQUIESCAT" /> windows should contain 4 spells
-				, consisting of <DataLink action="CONFITEOR" />, <DataLink action="BLADE_OF_FAITH" />, <DataLink action="BLADE_OF_TRUTH" />
-				, and <DataLink action="BLADE_OF_VALOR" /> for each each stack <DataLink status="REQUIESCAT" />.</Trans>
+				{isLowLevel
+					? <Trans id="pld.requiescat.table.note.low-level">Each of your <DataLink status="REQUIESCAT" /> windows should contain 4 spells
+					, consisting of <DataLink action="CONFITEOR" /> and three <DataLink action="HOLY_SPIRIT" />.</Trans>
+					: <Trans id="pld.requiescat.table.note">Each of your <DataLink status="REQUIESCAT" /> windows should contain 4 spells
+					, consisting of <DataLink action="CONFITEOR" />, <DataLink action="BLADE_OF_FAITH" />, <DataLink action="BLADE_OF_TRUTH" />
+					, and <DataLink action="BLADE_OF_VALOR" /> for each each stack <DataLink status="REQUIESCAT" />.</Trans>
+				}
 			</Message>
 			<>{super.output()}</>
 		</Fragment>
